@@ -13,7 +13,7 @@ backend:
   functions:
     - name: fastify
       path: .
-      entry: dist/index.mjs
+      entry: dist/index.js
       type: httpServer
   scripts:
     deploy:

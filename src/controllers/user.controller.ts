@@ -38,24 +38,6 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
       message: 'Failed to create user'
     })
   }
-  // await this.redis.set(`user:${user.insertedId}`, JSON.stringify({
-  //   email,
-  //   mobile,
-  //   fullname,
-  //   username,
-  //   lastLoginDevice,
-  //   lastLoginLocation,
-  //   lastLoginBrowser,
-  //   loginCount: 0,
-  //   lastLogin: null,
-  //   lastLogout: null,
-  //   createdAt: new Date(),
-  //   updatedAt: new Date(),
-  //   isVerified: false,
-  //   isDeleted: false
-  // }), {
-  //   EX: 60 * 60 * 24 // 1 day
-  // })
 
 
   reply.status(200).send({

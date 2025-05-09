@@ -8,7 +8,7 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
   const collection = this.mongo.db?.collection('diff-users')
 
   const userEmailExists = (await validateExistingUser(collection, email))?.status
-  const userMobileExists = (await collection?.findOne({ mobile }))?.status
+  const userMobileExists = (await validateExistingUser(collection, mobile))?.status
 
   if (!userEmailExists || !userMobileExists) {
     return reply.status(400).send({

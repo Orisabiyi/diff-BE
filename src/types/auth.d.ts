@@ -7,3 +7,14 @@ export interface CreateUser {
   lastLoginLocation: string | null
   lastLoginBrowser: string | null
 }
+
+export interface GenerateOTP {
+  email: string
+  mobile: string
+}
+export interface VerifyOTP {
+  email: string
+  mobile: string
+  otp: string
+  otpStatus: string
+}

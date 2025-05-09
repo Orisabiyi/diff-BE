@@ -16,6 +16,11 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
     })
   }
 
+  // generate otp
+  const otp = Math.floor(100000 + Math.random() * 900000)
+  const otpExpiry = new Date(Date.now() + 1 * 60 * 1000)
+  const otpStatus = 'pending'
+
   const user = await collection?.insertOne({
     email,
     mobile,

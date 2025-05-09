@@ -1,0 +1,24 @@
+name: diff-BE
+region: us-east-1
+yamlVersion: 2
+services:
+  databases:
+    - name: my-mongo-db
+      type: mongo-atlas
+backend:
+  path: .
+  language:
+    name: js
+    runtime: nodejs20.x
+  functions:
+    - name: fastify
+      path: .
+      entry: dist/index.mjs
+      type: httpServer
+  scripts:
+    deploy:
+      - pnpm install
+      - pnpm run build
+    local:
+      - pnpm install
+      - pnpm run build

@@ -3,7 +3,7 @@ import { CreateUser } from '../types/auth'
 import { validateExistingUser } from "../utils/db-validation";
 
 export async function createUser(this: FastifyInstance, request: FastifyRequest<{ Body: CreateUser }>, reply: FastifyReply) {
-  const { email, mobile, fullname, username } = request.body
+  const { email, mobile, fullname, username, lastLoginBrowser, lastLoginDevice, lastLoginLocation } = request.body
 
   const collection = this.mongo.db?.collection('diff-users')
 
@@ -15,6 +15,47 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
       message: 'user already exist'
     })
   }
+
+  const user = await collection?.insertOne({
+    email,
+    mobile,
+    fullname,
+    username,
+    lastLoginDevice,
+    lastLoginLocation,
+    lastLoginBrowser,
+    loginCount: 0,
+    lastLogin: null,
+    lastLogout: null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    isVerified: false,
+    isDeleted: false
+  })
+
+  if (!user) {
+    return reply.status(500).send({
+      message: 'Failed to create user'
+    })
+  }
+  // await this.redis.set(`user:${user.insertedId}`, JSON.stringify({
+  //   email,
+  //   mobile,
+  //   fullname,
+  //   username,
+  //   lastLoginDevice,
+  //   lastLoginLocation,
+  //   lastLoginBrowser,
+  //   loginCount: 0,
+  //   lastLogin: null,
+  //   lastLogout: null,
+  //   createdAt: new Date(),
+  //   updatedAt: new Date(),
+  //   isVerified: false,
+  //   isDeleted: false
+  // }), {
+  //   EX: 60 * 60 * 24 // 1 day
+  // })
 
 
   reply.status(200).send({

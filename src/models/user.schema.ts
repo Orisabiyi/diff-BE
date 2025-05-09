@@ -1,12 +1,15 @@
 export const userSchema = {
   body: {
     type: 'object',
-    required: ['email', 'mobile', 'fullname', 'username'],
+    required: ['email', 'mobile', 'fullname', 'username', 'lastLoginDevice', 'lastLoginLocation', 'lastLoginBrowser'],
     properties: {
       email: { type: 'string', format: 'email' },
       mobile: { type: 'string' },
       fullname: { type: 'string' },
-      username: { type: 'string' }
+      username: { type: 'string' },
+      lastLoginDevice: { type: 'string' },
+      lastLoginLocation: { type: 'string' },
+      lastLoginBrowser: { type: 'string' },
     }
   },
   response: {

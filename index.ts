@@ -15,7 +15,7 @@ fastify.register(dbConnector)
 // routes
 fastify.register(userRoute)
 
-fastify.listen({ port: 3000 }, function (err, address) {
+fastify.listen({ host: "0.0.0.0", port: 8080 }, function (err, address) {
   if (err) {
     fastify.log.error(err)
     process.exit(1)

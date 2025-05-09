@@ -2,3 +2,14 @@ node_modules
 .env
 note.md
 README.md
+dist
+package-lock.json
+yarn-error.log
+yarn.lock
+.vscode
+.idea
+.DS_Store
+.vscode-test
+.vscode-test/
+.vscode-test/
+.vscode-test/*

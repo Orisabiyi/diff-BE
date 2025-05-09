@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
-import dbConnector from './src/utils/dbConnector'
-import userRoute from './src/routes/user.routes'
+import dbConnector from './utils/dbConnector'
+import userRoute from './routes/user.routes'
 import dotenv from 'dotenv'
 
 dotenv.configDotenv()

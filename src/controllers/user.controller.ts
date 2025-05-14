@@ -1,6 +1,9 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { configDotenv } from "dotenv";
 import { CreateUser } from '../types/auth'
 import { validateExistingUser } from "../utils/db-validation";
+import { type FastifyInstance, type FastifyReply, type FastifyRequest } from "fastify";
+
+configDotenv()
 
 export async function createUser(this: FastifyInstance, request: FastifyRequest<{ Body: CreateUser }>, reply: FastifyReply) {
   const { email, mobile, fullname, username, lastLoginBrowser, lastLoginDevice, lastLoginLocation } = request.body
@@ -16,11 +19,7 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
     })
   }
 
-  // generate otp
-  const otp = Math.floor(100000 + Math.random() * 900000)
-  const otpExpiry = new Date(Date.now() + 1 * 60 * 1000)
-  const otpStatus = 'pending'
-
+  // create user
   const user = await collection?.insertOne({
     email,
     mobile,

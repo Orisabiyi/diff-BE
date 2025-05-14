@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import { CreateUser } from '../types/auth'
+import { CreateUser, GetUser } from '../types/auth'
 import { validateExistingUser } from "../utils/db-validation";
 import { type FastifyInstance, type FastifyReply, type FastifyRequest } from "fastify";
 
@@ -34,7 +34,9 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
     createdAt: new Date(),
     updatedAt: new Date(),
     isVerified: false,
-    isDeleted: false
+    isDeleted: false,
+    token: null,
+    tokenExpire: null,
   })
 
   if (!user) {
@@ -53,4 +55,20 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
       username
     }
   })
+}
+
+export async function getUser(this: FastifyInstance, request: FastifyRequest<{ Body: GetUser }>, reply: FastifyReply) {
+  const collection = this.mongo.db?.collection('diff-users')
+
+  const { username, password, email } = request.body
+
+  const userExist = await collection?.findOne({ username, password, email })
+
+  if (!userExist) {
+    return reply.status(400).send({
+      message: 'user not found'
+    })
+  }
+
+
 }

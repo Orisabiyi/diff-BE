@@ -2,6 +2,7 @@ import Fastify from 'fastify'
 import dbConnector from './utils/dbConnector'
 import userRoute from './routes/user.routes'
 import dotenv from 'dotenv'
+import fastifyToken from './utils/fastifyToken'
 
 dotenv.configDotenv()
 
@@ -11,6 +12,7 @@ const fastify = Fastify({
 
 // plugins
 fastify.register(dbConnector)
+fastify.register(fastifyToken)
 
 // routes
 fastify.register(userRoute)

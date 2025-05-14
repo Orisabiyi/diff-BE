@@ -8,6 +8,12 @@ export interface CreateUser {
   lastLoginBrowser: string | null
 }
 
+export interface GetUser {
+  username: string
+  password: string
+  email: string
+}
+
 export interface GenerateOTP {
   email: string
   mobile: string

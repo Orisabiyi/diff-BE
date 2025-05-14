@@ -26,4 +26,30 @@ export const userSchema = {
       }
     }
   }
-} 
+}
+
+export const getUserSchema = {
+  body: {
+    type: 'object',
+    required: ['username', 'password', 'email'],
+    properties: {
+      username: { type: 'string' },
+      password: { type: 'string' },
+      email: { type: 'string', format: 'email' }
+    }
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+        data: {
+          email: { type: 'string', format: 'email' },
+          mobile: { type: 'string' },
+          fullname: { type: 'string' },
+          username: { type: 'string' }
+        }
+      }
+    }
+  }
+}

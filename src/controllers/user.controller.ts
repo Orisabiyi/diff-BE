@@ -70,5 +70,7 @@ export async function getUser(this: FastifyInstance, request: FastifyRequest<{ B
     })
   }
 
+  const token = this.jwt.sign({ username, email, password })
 
+  console.log(token)
 }

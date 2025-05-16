@@ -1,6 +1,7 @@
 import Fastify from 'fastify'
 import dbConnector from './utils/dbConnector'
 import userRoute from './routes/user.routes'
+import directoryRoute from './routes/directory.routes'
 import dotenv from 'dotenv'
 import fastifyToken from './utils/fastifyToken'
 
@@ -16,6 +17,7 @@ fastify.register(fastifyToken)
 
 // routes
 fastify.register(userRoute)
+fastify.register(directoryRoute)
 
 fastify.listen({ host: "0.0.0.0", port: 8080 }, function (err, address) {
   if (err) {

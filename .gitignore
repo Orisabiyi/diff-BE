@@ -3,7 +3,7 @@ node_modules
 note.md
 README.md
 dist
-package-lock.json
+pnpm-lock.json
 yarn-error.log
 yarn.lock
 .vscode
@@ -13,3 +13,4 @@ yarn.lock
 .vscode-test/
 .vscode-test/
 .vscode-test/*
+src/controllers/populate.controller.ts

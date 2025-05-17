@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-export async function getDirectories(this: FastifyInstance, request: FastifyRequest, reply: FastifyReply) {
+export async function getDirectories(this: FastifyInstance, request: FastifyRequest<{ Params: { action: string } }>, reply: FastifyReply) {
+  const { action } = request.params;
   const collection = this.mongo.db?.collection("directory-data");
 
   if (!collection) {
@@ -11,8 +12,10 @@ export async function getDirectories(this: FastifyInstance, request: FastifyRequ
 
   const directories = await collection.find({}).toArray();
 
-  return reply.status(200).send({
-    message: "Directories fetched successfully",
-    data: directories,
-  });
+  if (action === "all") {
+    return reply.status(200).send({
+      message: "Directories retrieved successfully",
+      data: directories,
+    });
+  }
 }

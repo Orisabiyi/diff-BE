@@ -53,3 +53,27 @@ export const getUserSchema = {
     }
   }
 }
+
+export const getAllDirectoriesSchema = {
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+        data: {
+          _id: { type: 'string' },
+          name: { type: 'string' },
+          type: { type: 'string' },
+          description: { type: 'string' },
+          website: { type: 'string' },
+          "tags": [
+            "Early-stage",
+            "Startups",
+            "Funding"
+          ]
+        },
+
+      }
+    }
+  }
+}

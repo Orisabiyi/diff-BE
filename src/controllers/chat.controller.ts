@@ -20,7 +20,7 @@ export async function recommendFund(this: FastifyInstance, request: FastifyReque
     message: "userId is not valid"
   })
 
-  const collection = this.mongo.db?.collection("recommedations");
+  // const collection = this.mongo.db?.collection("recommedations");
 }
 
 export async function startChat() { }

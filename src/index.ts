@@ -4,12 +4,15 @@ import userRoute from './routes/user.routes'
 import directoryRoute from './routes/directory.routes'
 import dotenv from 'dotenv'
 import fastifyToken from './utils/fastifyToken'
+import { chatAuthMiddleware } from './middleware/auth.middleware'
 
 dotenv.configDotenv()
 
 const fastify = Fastify({
   logger: true
 })
+
+fastify.addHook('preHandler', chatAuthMiddleware)
 
 // plugins
 fastify.register(dbConnector)

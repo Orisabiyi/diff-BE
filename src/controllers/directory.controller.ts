@@ -23,6 +23,7 @@ export async function getDirectories(this: FastifyInstance, request: FastifyRequ
         tags: 1
       }
     }).limit(100).toArray();
+
     return reply.status(200).send({
       message: "Directories retrieved successfully",
       data: directories,

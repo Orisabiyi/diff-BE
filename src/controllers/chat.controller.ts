@@ -24,6 +24,15 @@ export async function recommendFund(
     });
   }
 
+  // get existing directory funds
+  const directoryCollection = this.mongo.db?.collection("directory");
+  const directoryFunds = await directoryCollection?.find({}).toArray();
+
+  return reply.status(200).send({
+    message: "Directory funds retrieved successfully",
+    data: directoryFunds
+  });
+
   // const collection = this.mongo.db?.collection("recommedations");
 }
 

@@ -70,7 +70,26 @@ export async function getUser(this: FastifyInstance, request: FastifyRequest<{ B
     })
   }
 
-  const token = this.jwt.sign({ username, email, password })
+  const token = this.jwt.sign({ username, email, password }, { expiresIn: '1day' })
 
-  console.log(token)
+  const updateCurrentUser = await collection?.updateOne(
+    { username, email, password },
+    {
+      $set: {
+        lastLogin: new Date(),
+        lastLoginDevice: request.headers['user-agent'] || 'unknown',
+        lastLoginLocation: request.headers['user-location'] || request.ip,
+        lastLoginBrowser: request.headers['user-agent'] || 'unknown',
+        token,
+      }
+    })
+
+  return reply.status(200).send({
+    message: 'User logged in successfully',
+    data: {
+      username: userExist.username,
+      email: userExist.email,
+      token,
+    }
+  })
 }

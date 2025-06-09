@@ -6,7 +6,7 @@ import { type FastifyInstance, type FastifyReply, type FastifyRequest } from "fa
 configDotenv()
 
 export async function createUser(this: FastifyInstance, request: FastifyRequest<{ Body: CreateUser }>, reply: FastifyReply) {
-  const { email, mobile, fullname, username, lastLoginBrowser, lastLoginDevice, lastLoginLocation } = request.body
+  const { email, mobile, fullname, username, password, lastLoginBrowser, lastLoginDevice, lastLoginLocation } = request.body
 
   const collection = this.mongo.db?.collection('diff-users')
 
@@ -19,12 +19,15 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
     })
   }
 
+  const hashPassword = await this.bcrypt.hash(password)
+
   // create user
   const user = await collection?.insertOne({
     email,
     mobile,
     fullname,
     username,
+    hashPassword,
     lastLoginDevice,
     lastLoginLocation,
     lastLoginBrowser,
@@ -62,9 +65,10 @@ export async function getUser(this: FastifyInstance, request: FastifyRequest<{ B
 
   const { username, password, email } = request.body
 
-  const userExist = await collection?.findOne({ username, password, email })
+  const userExist = await collection?.findOne({ username, email })
+  const checkUser = await this.bcrypt.compare(password, userExist?.hashPassword)
 
-  if (!userExist) {
+  if (!checkUser || !userExist) {
     return reply.status(400).send({
       message: 'user not found'
     })
@@ -72,15 +76,15 @@ export async function getUser(this: FastifyInstance, request: FastifyRequest<{ B
 
   const token = this.jwt.sign({ username, email, password }, { expiresIn: '1day' })
 
-  const updateCurrentUser = await collection?.updateOne(
-    { username, email, password },
+  await collection?.updateOne(
+    { username, email },
     {
       $set: {
         lastLogin: new Date(),
-        lastLoginDevice: request.headers['user-agent'] || 'unknown',
+        lastLoginDevice: request.headers['sec-ch-ua-platform'] || 'unknown',
         lastLoginLocation: request.headers['user-location'] || request.ip,
-        lastLoginBrowser: request.headers['user-agent'] || 'unknown',
-        token,
+        lastLoginBrowser: request.headers['sec-ch-ua'] || 'unknown',
+        token: token,
       }
     })
 

@@ -55,7 +55,8 @@ export async function createUser(this: FastifyInstance, request: FastifyRequest<
       email,
       mobile,
       fullname,
-      username
+      username,
+      userId: user.insertedId.toString(),
     }
   })
 }
@@ -94,6 +95,7 @@ export async function getUser(this: FastifyInstance, request: FastifyRequest<{ B
       username: userExist.username,
       email: userExist.email,
       token,
+      userId: userExist._id.toString(),
     }
   })
 }

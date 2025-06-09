@@ -21,7 +21,8 @@ export const userSchema = {
           email: { type: 'string', format: 'email' },
           mobile: { type: 'string' },
           fullname: { type: 'string' },
-          username: { type: 'string' }
+          username: { type: 'string' },
+          userId: { type: 'string' }
         }
       }
     }
@@ -47,7 +48,8 @@ export const getUserSchema = {
           email: { type: 'string', format: 'email' },
           mobile: { type: 'string' },
           fullname: { type: 'string' },
-          username: { type: 'string' }
+          username: { type: 'string' },
+          userId: { type: 'string' }
         }
       }
     }

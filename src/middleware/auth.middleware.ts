@@ -10,4 +10,20 @@ export async function chatAuthMiddleware(request: FastifyRequest<{ Body: CreateC
       message: "Authorization token is required"
     });
   }
+
+  try {
+    const decoded = await request.jwtVerify();
+
+    if (!decoded) {
+      return reply.status(401).send({
+        message: "Invalid token"
+      });
+    }
+
+    request.user = decoded;
+  } catch (error) {
+    return reply.status(401).send({
+      message: "Invalid token"
+    });
+  }
 }

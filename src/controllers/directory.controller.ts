@@ -31,7 +31,9 @@ export async function getDirectories(this: FastifyInstance, request: FastifyRequ
   }
 
   if (action === 'category' && tag) {
-    const directories = await collection.find({ tags: { $in: [tag] } }, {
+    const regex = new RegExp(tag, 'i');
+
+    const directories = await collection.find({ tags: { $elemMatch: { $regex: regex } } }, {
       projection: {
         _id: 0,
         name: 1,
@@ -52,3 +54,7 @@ export async function getDirectories(this: FastifyInstance, request: FastifyRequ
     message: "Invalid action",
   });
 }
+
+// export async function submitGrantOpportunity(thi: FastifyInstance, request: FastifyRequest, reply: FastifyReply) {
+//   const { type, opportunityName, organisation, website, appLink, opportunityDesc, grantAmount, frequency, deadline, eligibility } = request.body
+// }

@@ -50,6 +50,24 @@ export async function getDirectories(this: FastifyInstance, request: FastifyRequ
     });
   }
 
+  if (action === 'type' && tag) {
+    const directories = await collection.find({ type: tag }, {
+      projection: {
+        _id: 0,
+        name: 1,
+        type: 1,
+        description: 1,
+        website: 1,
+        tags: 1
+      }
+    }).limit(100).toArray();
+
+    return reply.status(200).send({
+      message: "Directories retrieved successfully",
+      data: directories,
+    });
+  }
+
   return reply.status(400).send({
     message: "Invalid action",
   });

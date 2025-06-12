@@ -5,7 +5,7 @@ export interface CreateChat {
 }
 
 export interface SubmitDirectoryProps {
-  type: 'grants' | 'vcs' | 'residency' | 'fellowship';
+  type: 'grants' | 'vcs' | 'residencies' | 'fellowships';
   name: string;
   organisation: string;
   website: string;
@@ -22,6 +22,6 @@ export interface SubmitDirectoryProps {
   location?: string;
   stipend?: string;
   duration?: string;
-  userName?: string;
-  email?: string;
+  submitterName?: string;
+  submitterEmail?: string;
 }

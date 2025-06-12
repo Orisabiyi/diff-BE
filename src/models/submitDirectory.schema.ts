@@ -19,8 +19,8 @@ export const submitDirectorySchema = {
       duration: { type: 'string', nullable: true },
       location: { type: 'string', nullable: true },
       stipend: { type: 'string', nullable: true },
-      userName: { type: 'string', nullable: true },
-      email: { type: 'string', format: 'email', nullable: true },
+      submitterName: { type: 'string', nullable: true },
+      submitterEmail: { type: 'string', format: 'email', nullable: true },
     }
   },
   response: {

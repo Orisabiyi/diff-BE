@@ -92,8 +92,8 @@ export async function submitGrantOpportunity(this: FastifyInstance, request: Fas
     duration,
     location,
     stipend,
-    userName,
-    email,
+    submitterName,
+    submitterEmail,
   } = request.body;
 
   const collection = this.mongo.db?.collection("directory-data");
@@ -138,8 +138,8 @@ export async function submitGrantOpportunity(this: FastifyInstance, request: Fas
     duration,
     location,
     stipend,
-    userName,
-    email,
+    submitterName,
+    submitterEmail,
   }
 
   for (const [key, value] of Object.entries(optionalFields)) {
